@@ -44,11 +44,10 @@ builder.Services.AddMvc().ConfigureApiBehaviorOptions(options =>
             status = "fail",
             details = new
             {
-                message = "Thông tin yêu cầu không chính xác!",
+                message = "Thông tin yêu cầu chưa chính xác hoặc không hợp lệ!",
                 errors
             }
         };
-
         // Return a BadRequest with the custom response
         return new BadRequestObjectResult(errorResponse);
     };
