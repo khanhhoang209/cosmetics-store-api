@@ -32,9 +32,9 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json",true,true)
             .Build();
-        var strConn = config["ConnectionStrings:CosmeticsStoreDb"];
+        var connectionString = config["ConnectionStrings:CosmeticsStoreDb"];
 
-        return strConn!;
+        return connectionString!;
     }
 
 
