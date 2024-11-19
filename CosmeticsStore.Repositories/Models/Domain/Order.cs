@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CosmeticsStore.Repositories.Models.Domain;
 
+[Table("Order")]
 public partial class Order
 {
+    [Key]
     public Guid OrderId { get; set; }
 
     public string UserId { get; set; } = null!;
@@ -23,7 +26,11 @@ public partial class Order
 
     public string ShippingStatus { get; set; } = null!;
 
+    [JsonIgnore]
+    [InverseProperty("Order")]
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
-    public virtual User User { get; set; } = null!;
+    [ForeignKey("UserId")]
+    [InverseProperty("Orders")]
+    public virtual ApplicationUser User { get; set; } = null!;
 }

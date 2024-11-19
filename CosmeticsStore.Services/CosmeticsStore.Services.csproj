@@ -7,7 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CosmeticsStore.Repositories\CosmeticsStore.Repositories.csproj" />
+      <ProjectReference Include="..\CosmeticsStore.Repositories\CosmeticsStore.Repositories.csproj">
+        <Private>True</Private>
+      </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
