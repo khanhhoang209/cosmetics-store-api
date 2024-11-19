@@ -50,7 +50,6 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
             .HasKey(p => p.ProductId);
 
         // Configuring relationships and other properties if needed
-
         modelBuilder.Entity<Order>()
             .HasOne(o => o.User)
             .WithMany(u => u.Orders)

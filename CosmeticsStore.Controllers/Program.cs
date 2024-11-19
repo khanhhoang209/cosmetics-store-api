@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -28,7 +27,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         options.Password.RequiredUniqueChars = 1;
     })
     .AddDefaultTokenProviders()
-    // .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CosmeticsStore")
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CosmeticsStore")
     .AddEntityFrameworkStores<CosmeticsStoreDbContext>();
 
 
