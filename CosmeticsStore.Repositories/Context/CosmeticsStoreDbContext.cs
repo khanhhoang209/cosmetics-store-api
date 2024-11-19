@@ -4,14 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CosmeticsStore.Repositories.Context;
 
-public partial class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
+public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
 {
-    public CosmeticsStoreDbContext()
-    {
-    }
-
-    public CosmeticsStoreDbContext(DbContextOptions<CosmeticsStoreDbContext> options)
-        : base(options)
+    public CosmeticsStoreDbContext(DbContextOptions<CosmeticsStoreDbContext> options) : base(options)
     {
     }
 
@@ -25,128 +20,66 @@ public partial class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<Role> Roles { get; set; }
-
-    public virtual DbSet<User> Users { get; set; }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer("CosmeticsStore");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Cart>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("Cart");
+        base.OnModelCreating(modelBuilder);
 
-            entity.Property(e => e.UserId).HasMaxLength(50);
+        // Composite primary key for Cart
+        modelBuilder.Entity<Cart>()
+            .HasKey(c => new { c.UserId, c.ProductId });
 
-            entity.HasOne(d => d.Product).WithMany()
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("C_FK_P");
+        // Primary key for Category
+        modelBuilder.Entity<Category>()
+            .HasKey(c => c.CategoryId);
 
-            entity.HasOne(d => d.User).WithMany()
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("C_FK_U");
-        });
+        // Primary key for Order
+        modelBuilder.Entity<Order>()
+            .HasKey(o => o.OrderId);
 
-        modelBuilder.Entity<Category>(entity =>
-        {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Category__19093A0B692C8A1B");
+        // Composite primary key for OrderDetail
+        modelBuilder.Entity<OrderDetail>()
+            .HasKey(od => new { od.OrderId, od.ProductId });
 
-            entity.ToTable("Category");
+        // Primary key for Product
+        modelBuilder.Entity<Product>()
+            .HasKey(p => p.ProductId);
 
-            entity.Property(e => e.Name).HasMaxLength(200);
-            entity.Property(e => e.Status).HasDefaultValue(true);
-        });
+        // Configuring relationships and other properties if needed
 
-        modelBuilder.Entity<Order>(entity =>
-        {
-            entity.HasKey(e => e.OrderId).HasName("PK__Order__C3905BCF8B9C06B4");
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.User)
+            .WithMany(u => u.Orders)
+            .HasForeignKey(o => o.UserId);
 
-            entity.ToTable("Order");
+        modelBuilder.Entity<OrderDetail>()
+            .HasOne(od => od.Order)
+            .WithMany(o => o.OrderDetails)
+            .HasForeignKey(od => od.OrderId);
 
-            entity.Property(e => e.OrderId).ValueGeneratedNever();
-            entity.Property(e => e.PhoneNumber).HasMaxLength(10);
-            entity.Property(e => e.ShippingStatus).HasMaxLength(200);
-            entity.Property(e => e.Total).HasColumnType("money");
-            entity.Property(e => e.UserId).HasMaxLength(50);
+        modelBuilder.Entity<OrderDetail>()
+            .HasOne(od => od.Product)
+            .WithMany(p => p.OrderDetails)
+            .HasForeignKey(od => od.ProductId);
 
-            entity.HasOne(d => d.User).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("O_FK_U");
-        });
+        modelBuilder.Entity<Product>()
+            .HasOne(p => p.Category)
+            .WithMany(c => c.Products)
+            .HasForeignKey(p => p.CategoryId);
 
-        modelBuilder.Entity<OrderDetail>(entity =>
-        {
-            entity.HasKey(e => new { e.OrderId, e.ProductId }).HasName("OD_PK");
+        modelBuilder.Entity<Cart>()
+            .HasOne(c => c.User)
+            .WithMany(u => u.Carts)
+            .HasForeignKey(c => c.UserId);
 
-            entity.ToTable("OrderDetail");
+        modelBuilder.Entity<Cart>()
+            .HasOne(c => c.Product)
+            .WithMany(p => p.Carts)
+            .HasForeignKey(c => c.ProductId);
 
-            entity.Property(e => e.Price).HasColumnType("money");
-
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("OD_FK_O");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("OD_FK_P");
-        });
-
-        modelBuilder.Entity<Product>(entity =>
-        {
-            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6CD3F67C549");
-
-            entity.ToTable("Product");
-
-            entity.Property(e => e.Image).HasMaxLength(200);
-            entity.Property(e => e.Name).HasMaxLength(200);
-            entity.Property(e => e.Price).HasColumnType("money");
-            entity.Property(e => e.Status).HasDefaultValue(true);
-
-            entity.HasOne(d => d.Category).WithMany(p => p.Products)
-                .HasForeignKey(d => d.CategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("P_FK_C");
-        });
-
-        modelBuilder.Entity<Role>(entity =>
-        {
-            entity.HasKey(e => e.RoleId).HasName("PK__Role__8AFACE1AA8B4E88C");
-
-            entity.ToTable("Role");
-
-            entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.NormalizedName).HasMaxLength(100);
-            entity.Property(e => e.Status).HasDefaultValue(true);
-        });
-
-        modelBuilder.Entity<User>(entity =>
-        {
-            entity.HasKey(e => e.UserId).HasName("PK__User__1788CC4C7406F471");
-
-            entity.ToTable("User");
-
-            entity.Property(e => e.UserId).HasMaxLength(50);
-            entity.Property(e => e.Address).HasMaxLength(200);
-            entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.FirstName).HasMaxLength(100);
-            entity.Property(e => e.LastName).HasMaxLength(100);
-            entity.Property(e => e.Password).HasMaxLength(50);
-            entity.Property(e => e.Status).HasDefaultValue(true);
-
-            entity.HasOne(d => d.Role).WithMany(p => p.Users)
-                .HasForeignKey(d => d.RoleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("U_FK_R");
-        });
-
-        OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

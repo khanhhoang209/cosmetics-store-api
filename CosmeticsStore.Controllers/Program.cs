@@ -10,10 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add DbContext
-builder.Services.AddDbContext<CosmeticsStoreDbContext>(option =>
+//Add DbContext
+builder.Services.AddDbContext<CosmeticsStoreDbContext>(options =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("CosmeticsStore"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CosmeticsStore"));
 });
 
 
@@ -28,7 +28,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         options.Password.RequiredUniqueChars = 1;
     })
     .AddDefaultTokenProviders()
-    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("KitStemHub")
+    // .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CosmeticsStore")
     .AddEntityFrameworkStores<CosmeticsStoreDbContext>();
 
 
@@ -42,7 +42,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
 
