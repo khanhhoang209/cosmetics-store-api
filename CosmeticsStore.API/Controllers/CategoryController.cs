@@ -19,7 +19,7 @@ public class CategoryController : ControllerBase
     [HttpGet]
     [Route("{id:int}")]
     [ActionName(nameof(GetByIdAsync))]
-    public async Task<IActionResult> GetByIdAsync(int id)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
     {
         var serviceResponse = await _categoryService.GetByIdAsync(id);
         if (!serviceResponse.Succeeded)
