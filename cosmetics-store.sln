@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmeticsStore.Controllers", "CosmeticsStore.Controllers\CosmeticsStore.Controllers.csproj", "{CBC72B10-B27F-4BC0-8FFF-CF70B9574867}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmeticsStore.API", "CosmeticsStore.API\CosmeticsStore.API.csproj", "{CBC72B10-B27F-4BC0-8FFF-CF70B9574867}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmeticsStore.Services", "CosmeticsStore.Services\CosmeticsStore.Services.csproj", "{667C2A58-F89F-4C27-B10F-8FC22A9C15D1}"
 EndProject
