@@ -1,5 +1,4 @@
-﻿using CosmeticsStore.Repositories.Models.Domain;
-using CosmeticsStore.Services.DTO.Request;
+﻿using CosmeticsStore.Services.DTO.Request;
 using CosmeticsStore.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +17,6 @@ public class CategoryController : ControllerBase
 
     [HttpGet]
     [Route("{id:int}")]
-    [ActionName(nameof(GetByIdAsync))]
     public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
     {
         var serviceResponse = await _categoryService.GetByIdAsync(id);
