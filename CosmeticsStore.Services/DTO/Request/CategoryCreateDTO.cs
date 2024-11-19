@@ -7,5 +7,6 @@ public class CategoryCreateDTO
     [Required(ErrorMessage = "Vui lòng nhập tên!")]
     public string? Name { get; set; }
 
-    public bool? Status { get; set; }
+    [Required]
+    public bool? Status { get; set; } = true;
 }
