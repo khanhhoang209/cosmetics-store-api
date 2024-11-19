@@ -37,7 +37,6 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
         return connectionString!;
     }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -92,6 +91,5 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(c => c.Product)
             .WithMany(p => p.Carts)
             .HasForeignKey(c => c.ProductId);
-
     }
 }
