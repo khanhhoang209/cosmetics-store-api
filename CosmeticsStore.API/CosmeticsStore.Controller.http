@@ -1,6 +1,0 @@
-@CosmeticsStore.Controller_HostAddress = https://localhost:5096
-
-GET {{CosmeticsStore.Controller_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

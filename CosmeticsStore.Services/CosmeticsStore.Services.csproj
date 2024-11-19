@@ -17,6 +17,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="DTO\Request\" />
+      <Folder Include="DTO\Response\" />
       <Folder Include="Implements\" />
       <Folder Include="Interfaces\" />
       <Folder Include="Utils\" />
