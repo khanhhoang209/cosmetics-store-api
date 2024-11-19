@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CosmeticsStore.Repositories.Implements;
 
-public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
+public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     protected readonly CosmeticsStoreDbContext _dbContext;
     protected readonly DbSet<T> _dbSet;

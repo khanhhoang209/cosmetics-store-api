@@ -1,13 +1,18 @@
 using CosmeticsStore.Repositories.Context;
+using CosmeticsStore.Repositories.Implements;
+using CosmeticsStore.Repositories.Interfaces;
 using CosmeticsStore.Repositories.Models.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Add repositories
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepostory>();
+
+// Add services
+
 
 //Add DbContext
 builder.Services.AddDbContext<CosmeticsStoreDbContext>(options =>
@@ -30,6 +35,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CosmeticsStore")
     .AddEntityFrameworkStores<CosmeticsStoreDbContext>();
 
+
+// Add services to the container.
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
