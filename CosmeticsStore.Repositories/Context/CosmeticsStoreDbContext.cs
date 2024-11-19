@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using CosmeticsStore.Repositories.Models.Domain;
+﻿using CosmeticsStore.Repositories.Models.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CosmeticsStore.Repositories.Context;
 
-public partial class CosmeticsStoreDbContext : DbContext
+public partial class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
 {
     public CosmeticsStoreDbContext()
     {
