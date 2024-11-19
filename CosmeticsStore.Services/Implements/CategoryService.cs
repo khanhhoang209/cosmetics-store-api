@@ -59,17 +59,9 @@ public class CategoryService : ICategoryService
             var newCategory = _mapper.Map<Category>(category);
 
             var success = await _unitOfWork.CategoryRepository.CreateAsync(newCategory);
-            if (!success)
-            {
-                return serviceResponse
-                    .SetSucceeded(false)
-                    .SetStatusCode(StatusCodes.Status400BadRequest)
-                    .AddDetail("message", "Thêm mới loại mỹ phẩm thất bại!")
-                    .AddError("invalidCredentials", "Thông tin yêu cầu chưa chính xác hoặc không hợp lệ!");
-            }
 
             return serviceResponse
-                .SetSucceeded(true)
+                .SetSucceeded(success)
                 .AddDetail("message", "Thêm mới loại mỹ phẩm thành công!");
         }
         catch
