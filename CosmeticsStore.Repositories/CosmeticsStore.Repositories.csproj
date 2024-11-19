@@ -9,6 +9,7 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
         <PrivateAssets>all</PrivateAssets>
@@ -32,7 +33,6 @@
       <Folder Include="Implements\" />
       <Folder Include="Interfaces\" />
       <Folder Include="Migrations\" />
-      <Folder Include="Models\Domain\" />
       <Folder Include="Models\DTO\" />
     </ItemGroup>
 
