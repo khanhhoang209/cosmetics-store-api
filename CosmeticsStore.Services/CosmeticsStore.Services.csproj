@@ -16,12 +16,4 @@
       <PackageReference Include="AutoMapper" Version="13.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="DTO\Request\" />
-      <Folder Include="DTO\Response\" />
-      <Folder Include="Implements\" />
-      <Folder Include="Interfaces\" />
-      <Folder Include="Utils\" />
-    </ItemGroup>
-
 </Project>
