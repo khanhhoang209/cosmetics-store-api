@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmeticsStore.Controllers", "CosmeticsStore.Controllers\CosmeticsStore.Controllers.csproj", "{CBC72B10-B27F-4BC0-8FFF-CF70B9574867}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmeticsStore.Services", "CosmeticsStore.Services\CosmeticsStore.Services.csproj", "{667C2A58-F89F-4C27-B10F-8FC22A9C15D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmeticsStore.Repositories", "CosmeticsStore.Repositories\CosmeticsStore.Repositories.csproj", "{A3F6B928-7F10-4F51-ABC2-E912E6A2EB7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBC72B10-B27F-4BC0-8FFF-CF70B9574867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC72B10-B27F-4BC0-8FFF-CF70B9574867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC72B10-B27F-4BC0-8FFF-CF70B9574867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC72B10-B27F-4BC0-8FFF-CF70B9574867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667C2A58-F89F-4C27-B10F-8FC22A9C15D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667C2A58-F89F-4C27-B10F-8FC22A9C15D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667C2A58-F89F-4C27-B10F-8FC22A9C15D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667C2A58-F89F-4C27-B10F-8FC22A9C15D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3F6B928-7F10-4F51-ABC2-E912E6A2EB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3F6B928-7F10-4F51-ABC2-E912E6A2EB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3F6B928-7F10-4F51-ABC2-E912E6A2EB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3F6B928-7F10-4F51-ABC2-E912E6A2EB7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
