@@ -57,6 +57,7 @@ public class CategoryService : ICategoryService
         try
         {
             var newCategory = _mapper.Map<Category>(category);
+
             var success = await _unitOfWork.CategoryRepository.CreateAsync(newCategory);
             if (!success)
             {
@@ -69,7 +70,6 @@ public class CategoryService : ICategoryService
 
             return serviceResponse
                 .SetSucceeded(true)
-                .SetStatusCode(StatusCodes.Status201Created)
                 .AddDetail("message", "Thêm mới loại mỹ phẩm thành công!");
         }
         catch
