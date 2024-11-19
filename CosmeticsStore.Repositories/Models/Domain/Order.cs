@@ -16,7 +16,7 @@ public partial class Order
 
     public DateTimeOffset? DelivereAt { get; set; }
 
-    public decimal Total { get; set; }
+    public long Total { get; set; }
 
     public string? Note { get; set; }
 

@@ -2,6 +2,9 @@ using CosmeticsStore.Repositories.Context;
 using CosmeticsStore.Repositories.Implements;
 using CosmeticsStore.Repositories.Interfaces;
 using CosmeticsStore.Repositories.Models.Domain;
+using CosmeticsStore.Services.Implements;
+using CosmeticsStore.Services.Interfaces;
+using CosmeticsStore.Services.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,12 +15,12 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepostory>();
 
 // Add services
-
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 //Add DbContext
 builder.Services.AddDbContext<CosmeticsStoreDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CosmeticsStore"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CosmeticsStoreDb"));
 });
 
 
@@ -39,6 +42,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 
@@ -51,8 +56,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 app.MapControllers();
 
