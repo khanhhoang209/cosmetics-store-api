@@ -22,6 +22,8 @@ public class CategoryService : ICategoryService
         _mapper = mapper;
     }
 
+    #region Service method
+    
     public async Task<ServiceResponse> GetAllAsync(CategoryGetDTO category)
     {
         var serviceResponse = new ServiceResponse();
@@ -189,6 +191,8 @@ public class CategoryService : ICategoryService
                 .AddError("outOfService", "Không thể khôi phục loại mỹ phẩm ngay lúc này!");
         }
     }
+
+    #endregion
 
     #region Helper method
 
