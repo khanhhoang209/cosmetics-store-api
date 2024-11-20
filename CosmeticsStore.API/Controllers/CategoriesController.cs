@@ -64,8 +64,8 @@ public class CategoriesController : ControllerBase
         return Ok(new { status = serviceResponse.Status, details = serviceResponse.Details });
     }
 
-    [HttpPut]
-    [Route("Removes/{id:int}")]
+    [HttpDelete]
+    [Route("{id:int}")]
     public async Task<IActionResult> RemoveAsync([FromRoute] int id)
     {
         var serviceResponse = await _categoryService.RemoveAsync(id);
@@ -78,7 +78,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPut]
-    [Route("Restores/{id:int}")]
+    [Route("{id:int}/Restore")]
     public async Task<IActionResult> RestoreAsync([FromRoute] int id)
     {
         var serviceResponse = await _categoryService.RestoreAsync(id);
