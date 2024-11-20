@@ -16,6 +16,18 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet]
+    public async Task<IActionResult> GetAllAsyc([FromQuery] CategoryGetDTO category)
+    {
+        var serviceResponse = await _categoryService.GetAllAsync(category);
+        if (!serviceResponse.Succeeded)
+        {
+            return StatusCode(serviceResponse.StatusCode, new { status = serviceResponse.Status, details = serviceResponse.Details });
+        }
+
+        return Ok(new { status = serviceResponse.Status, details = serviceResponse.Details });
+    }
+
+    [HttpGet]
     [Route("{id:int}")]
     public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
     {
@@ -39,4 +51,43 @@ public class CategoriesController : ControllerBase
 
         return Ok(new { status = serviceResponse.Status, details = serviceResponse.Details });
     }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateAsync([FromBody] CategoryUpdateDTO category)
+    {
+        var serviceResponse = await _categoryService.UpdateAsync(category);
+        if (!serviceResponse.Succeeded)
+        {
+            return StatusCode(serviceResponse.StatusCode, new { status = serviceResponse.Status, details = serviceResponse.Details });
+        }
+
+        return Ok(new { status = serviceResponse.Status, details = serviceResponse.Details });
+    }
+
+    [HttpPut]
+    [Route("Removes/{id:int}")]
+    public async Task<IActionResult> RemoveAsync([FromRoute] int id)
+    {
+        var serviceResponse = await _categoryService.RemoveAsync(id);
+        if (!serviceResponse.Succeeded)
+        {
+            return StatusCode(serviceResponse.StatusCode, new { status = serviceResponse.Status, details = serviceResponse.Details });
+        }
+
+        return NoContent();
+    }
+
+    [HttpPut]
+    [Route("Restores/{id:int}")]
+    public async Task<IActionResult> RestoreAsync([FromRoute] int id)
+    {
+        var serviceResponse = await _categoryService.RestoreAsync(id);
+        if (!serviceResponse.Succeeded)
+        {
+            return StatusCode(serviceResponse.StatusCode, new { status = serviceResponse.Status, details = serviceResponse.Details });
+        }
+
+        return Ok(new { status = serviceResponse.Status, details = serviceResponse.Details });
+    }
+
 }

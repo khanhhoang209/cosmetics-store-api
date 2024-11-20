@@ -12,5 +12,7 @@ public class AutoMapperProfile : Profile
         //Map for Category
         CreateMap<CategoryCreateDTO, Category>();
         CreateMap<Category, CategoryResponseDTO>();
+        CreateMap<CategoryUpdateDTO, Category>();
+        CreateMap<Category, CategoryGetDTO>();
     }
 }
