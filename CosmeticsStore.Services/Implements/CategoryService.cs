@@ -31,7 +31,7 @@ public class CategoryService : ICategoryService
         {
             Expression<Func<Category, bool>> filter = GetFilter(category);
             var (models, totalPages) = await _unitOfWork.CategoryRepository
-                                .GetFilterAsync(filter, null, _sizePerPage * category.Page, _sizePerPage);
+                .GetFilterAsync(filter, null, _sizePerPage * category.Page, _sizePerPage);
 
             var categories = _mapper.Map<IEnumerable<CategoryResponseDTO>>(models);
             return serviceResponse
