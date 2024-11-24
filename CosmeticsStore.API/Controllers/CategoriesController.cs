@@ -16,7 +16,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllAsyc([FromQuery] CategoryGetDTO category)
+    public async Task<IActionResult> GetAllAsync([FromQuery] CategoryGetDTO category)
     {
         var serviceResponse = await _categoryService.GetAllAsync(category);
         if (!serviceResponse.Succeeded)
