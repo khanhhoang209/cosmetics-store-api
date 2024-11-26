@@ -199,7 +199,7 @@ public class CategoryService : ICategoryService
         private Expression<Func<Category, bool>> GetFilter(CategoryGetDTO category)
         {
             return (c) =>
-                c.Name!.ToLower().Contains(category.Name!.ToLower() ?? "") &&
+                c.Name!.ToLower().Contains(category.Name!.ToLower() + "") &&
                 c.Status == category.Status;
         }
 
