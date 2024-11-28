@@ -8,7 +8,7 @@ namespace CosmeticsStore.Repositories.Models.Domain;
 public partial class Order
 {
     [Key]
-    public Guid OrderId { get; set; }
+    public Guid Id { get; set; }
 
     public string UserId { get; set; } = null!;
 
@@ -29,6 +29,9 @@ public partial class Order
     [JsonIgnore]
     [InverseProperty("Order")]
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
+    [InverseProperty("Order")]
+    public virtual Payment? Payment { get; set; }
 
     [ForeignKey("UserId")]
     [InverseProperty("Orders")]

@@ -8,7 +8,7 @@ namespace CosmeticsStore.Repositories.Models.Domain;
 public partial class Category
 {
     [Key]
-    public int CategoryId { get; set; }
+    public int Id { get; set; }
 
     public string? Name { get; set; }
 
