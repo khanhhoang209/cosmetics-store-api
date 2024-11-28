@@ -12,7 +12,7 @@ namespace CosmeticsStore.Services.Implements;
 
 public class CategoryService : ICategoryService
 {
-    private int _sizePerPage = 20;
+    private int _sizePerPage = 2;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
