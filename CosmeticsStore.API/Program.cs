@@ -19,7 +19,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Add services
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
