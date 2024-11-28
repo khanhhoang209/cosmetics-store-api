@@ -4,6 +4,7 @@ using CosmeticsStore.Repositories.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CosmeticsStore.Repositories.Migrations
 {
     [DbContext(typeof(CosmeticsStoreDbContext))]
-    partial class CosmeticsStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241128223436_SEEDING_USER_ROLE")]
+    partial class SEEDING_USER_ROLE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
