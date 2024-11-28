@@ -50,9 +50,9 @@ public class UserService : IUserService
             {
                 return (serviceResponse
                         .SetSucceeded(false)
-                        .SetStatusCode(StatusCodes.Status401Unauthorized)
+                        .SetStatusCode(StatusCodes.Status409Conflict)
                         .AddDetail("message", "Tạo tài khoản thất bại!")
-                        .AddError("unavailableUsername", "Tên tài khoản đã tồn tại!")
+                        .AddError("availableUser", "Tài khoản đã tồn tại!")
                         , null);
             }
 
@@ -61,7 +61,7 @@ public class UserService : IUserService
             {
                 return (serviceResponse
                         .SetSucceeded(false)
-                        .SetStatusCode(StatusCodes.Status401Unauthorized)
+                        .SetStatusCode(StatusCodes.Status400BadRequest)
                         .AddDetail("message", "Tạo tài khoản thất bại!")
                         .AddError("invalidCredentials", "Vai trò yêu cầu không tồn tại!")
                         , null);
