@@ -1,6 +1,4 @@
-﻿using CosmeticsStore.Repositories.Models.Domain;
-using CosmeticsStore.Services.DTO.Request;
-using CosmeticsStore.Services.DTO.Response;
+﻿using CosmeticsStore.Services.DTO.Request;
 using CosmeticsStore.Services.Schema;
 
 namespace CosmeticsStore.Services.Interfaces;
