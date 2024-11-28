@@ -47,11 +47,11 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
 
         // Primary key for Category
         modelBuilder.Entity<Category>()
-            .HasKey(c => c.CategoryId);
+            .HasKey(c => c.Id);
 
         // Primary key for Order
         modelBuilder.Entity<Order>()
-            .HasKey(o => o.OrderId);
+            .HasKey(o => o.Id);
 
         // Composite primary key for OrderDetail
         modelBuilder.Entity<OrderDetail>()
@@ -59,13 +59,26 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
 
         // Primary key for Product
         modelBuilder.Entity<Product>()
-            .HasKey(p => p.ProductId);
+            .HasKey(p => p.Id);
+
+        // Primary key for Payment
+        modelBuilder.Entity<Payment>()
+            .HasKey(p => p.Id);
+
+        // Primary key for Method
+        modelBuilder.Entity<Method>()
+            .HasKey(m => m.Id);
 
         // Configuring relationships and other properties if needed
         modelBuilder.Entity<Order>()
             .HasOne(o => o.User)
             .WithMany(u => u.Orders)
             .HasForeignKey(o => o.UserId);
+
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.Payment)
+            .WithOne(p => p.Order)
+            .HasForeignKey<Payment>(p => p.OrderId);
 
         modelBuilder.Entity<OrderDetail>()
             .HasOne(od => od.Order)
@@ -91,5 +104,11 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(c => c.Product)
             .WithMany(p => p.Carts)
             .HasForeignKey(c => c.ProductId);
+
+        modelBuilder.Entity<Payment>()
+            .HasOne(p => p.Method)
+            .WithMany(m => m.Payments)
+            .HasForeignKey(o => o.MethodId);
+
     }
 }
