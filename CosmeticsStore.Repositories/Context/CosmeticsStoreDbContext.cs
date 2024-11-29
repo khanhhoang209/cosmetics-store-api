@@ -22,6 +22,10 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<Payment> Payments { get; set; }
+
+    public virtual DbSet<Method> Methods { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(GetConnectionString());
