@@ -12,9 +12,9 @@ namespace CosmeticsStore.Services.Implements;
 
 public class CategoryService : ICategoryService
 {
-    private int _sizePerPage = 2;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private const int SizePerPage = 2;
 
     public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
     {
@@ -31,7 +31,7 @@ public class CategoryService : ICategoryService
         {
             Expression<Func<Category, bool>> filter = GetFilter(category);
             var (models, totalPages) = await _unitOfWork.CategoryRepository
-                .GetFilterAsync(filter, null, _sizePerPage * category.Page, _sizePerPage);
+                .GetFilterAsync(filter, null, SizePerPage * category.Page, SizePerPage);
 
             var categories = _mapper.Map<IEnumerable<CategoryResponseDTO>>(models);
             return serviceResponse
@@ -66,11 +66,11 @@ public class CategoryService : ICategoryService
                     .AddError("notFound", "Không tìm thấy loại mỹ phẩm ngay lúc này!");
             }
 
-            var categoryDTO = _mapper.Map<CategoryResponseDTO>(category);
+            var categoryDto = _mapper.Map<CategoryResponseDTO>(category);
             return serviceResponse
                 .SetSucceeded(true)
                 .AddDetail("message", "Lấy thông tin loại mỹ phẩm thành công!")
-                .AddDetail("data", new { category = categoryDTO });
+                .AddDetail("data", new { category = categoryDto });
         }
         catch
         {
