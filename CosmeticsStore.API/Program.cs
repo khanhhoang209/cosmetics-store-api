@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CosmeticsStore.API.Configs;
@@ -8,14 +9,18 @@ using CosmeticsStore.Repositories.Models.Domain;
 using CosmeticsStore.Services.Implements;
 using CosmeticsStore.Services.Interfaces;
 using CosmeticsStore.Services.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add repositories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 // Add services
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -51,9 +56,35 @@ builder.Services.AddMvc().ConfigureApiBehaviorOptions(options =>
         return new BadRequestObjectResult(errorResponse);
     };
 });
-builder.Services.AddSwaggerGen(options =>
+builder.Services.AddSwaggerGen(opt =>
 {
-    options.ParameterFilter<KebabCaseParameterFilter>();
+    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "cosmetics-store-api", Version = "v1" });
+    opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+
+    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            []
+        }
+    });
+
+    opt.ParameterFilter<KebabCaseParameterFilter>();
 });
 builder.Services
     .AddControllers(options =>
@@ -87,6 +118,32 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CosmeticsStore")
     .AddEntityFrameworkStores<CosmeticsStoreDbContext>();
 
+//Add Authentication
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromMinutes(5));
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        var _config = builder.Configuration;
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ClockSkew = TimeSpan.Zero,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            RequireAudience = true,
+            RequireExpirationTime = true,
+            RequireSignedTokens = true,
+            ValidAudience = _config["Jwt:Audience"],
+            ValidIssuer = _config["Jwt:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"] ?? throw new ArgumentException()))
+        };
+    });
 
 
 
@@ -101,8 +158,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// app.UseAuthentication();
-// app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
