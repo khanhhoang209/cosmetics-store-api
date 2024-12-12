@@ -26,6 +26,8 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
 
     public virtual DbSet<Method> Methods { get; set; }
 
+    public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(GetConnectionString());
@@ -73,6 +75,10 @@ public class CosmeticsStoreDbContext : IdentityDbContext<ApplicationUser>
         // Primary key for Method
         modelBuilder.Entity<Method>()
             .HasKey(m => m.Id);
+
+        // Primary key for Refresh Token
+        modelBuilder.Entity<RefreshToken>()
+            .HasKey(rt => rt.Id);
 
         // Configuring relationships and other properties if needed
         modelBuilder.Entity<Order>()

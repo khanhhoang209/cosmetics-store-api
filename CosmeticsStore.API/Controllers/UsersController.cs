@@ -29,5 +29,18 @@ public class UsersController : ControllerBase
         return Ok(new { status = serviceResponse.Status, details = serviceResponse.Details });
     }
 
+    [HttpPost]
+    [Route("Login")]
+    public async Task<IActionResult> LoginAsync([FromBody] UserLoginDTO requestBody)
+    {
+        var serviceResponse = await _userService.LoginAsync(requestBody);
+        if (!serviceResponse.Succeeded)
+        {
+            return Unauthorized(new { status = serviceResponse.Status, details = serviceResponse.Details });
+        }
+
+        return Ok(new { status = serviceResponse.Status, details = serviceResponse.Details });
+    }
+
 
 }

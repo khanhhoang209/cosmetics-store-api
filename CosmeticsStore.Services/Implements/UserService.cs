@@ -12,13 +12,13 @@ namespace CosmeticsStore.Services.Implements;
 
 public class UserService : IUserService
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ITokenRepository _tokenRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IMapper _mapper;
 
-    public UserService(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IMapper mapper)
+    public UserService(ITokenRepository tokenRepository, UserManager<ApplicationUser> userManager, IMapper mapper)
     {
-        _unitOfWork = unitOfWork;
+        _tokenRepository = tokenRepository;
         _userManager = userManager;
         _mapper = mapper;
     }
@@ -82,6 +82,49 @@ public class UserService : IUserService
                     .AddDetail("message", "Tạo tài khoản thất bại!")
                     .AddError("outOfService", "Không thể tạo tài khoản ngay lúc này!")
                     , null);
+        }
+    }
+
+    public async Task<ServiceResponse> LoginAsync(UserLoginDTO requestBody)
+    {
+        var serviceResponse = new ServiceResponse();
+        try
+        {
+            var user = await _userManager.FindByNameAsync(requestBody.Email!);
+            if (user == null || !await _userManager.CheckPasswordAsync(user, requestBody.Password!))
+            {
+                return serviceResponse
+                    .SetSucceeded(false)
+                    .AddDetail("message", "Đăng nhập thất bại!")
+                    .AddError("invalidCredentials", "Tên đăng nhập hoặc mật khẩu không chính xác!");
+            }
+
+            if (!user.Status)
+            {
+                return serviceResponse
+                    .SetSucceeded(false)
+                    .SetStatusCode(StatusCodes.Status401Unauthorized)
+                    .AddDetail("message", "Đăng nhập thất bại!")
+                    .AddError("invalidCredentials", "Tài khoản của bạn đã bị vô hiệu hoá, vui lòng liện hệ cửa hàng để được hỗ trợ!");
+            }
+
+            var role = (await _userManager.GetRolesAsync(user))[0];
+            var accessToken = _tokenRepository.GenerateJwtToken(user, role);
+            var refreshToken = (await _tokenRepository.GenerateRefreshToken(user)).Id;
+
+            return new ServiceResponse()
+                .SetSucceeded(true)
+                .AddDetail("message", "Đăng nhập thành công!")
+                .AddDetail("accessToken", accessToken)
+                .AddDetail("refreshToken", refreshToken);
+        }
+        catch
+        {
+            return serviceResponse
+                .SetSucceeded(false)
+                .SetStatusCode(StatusCodes.Status500InternalServerError)
+                .AddDetail("message", "Đăng nhập thất bại!")
+                .AddError("outOfService", "Không thể đăng nhập ngay lúc này!");
         }
     }
 }

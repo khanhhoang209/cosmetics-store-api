@@ -1,5 +1,6 @@
 ﻿using CosmeticsStore.Services.DTO.Request;
 using CosmeticsStore.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CosmeticsStore.API.Controllers;
@@ -16,6 +17,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Customer")]
     public async Task<IActionResult> GetAllAsync([FromQuery] CategoryGetDTO category)
     {
         var serviceResponse = await _categoryService.GetAllAsync(category);

@@ -7,7 +7,7 @@ namespace CosmeticsStore.Repositories.Implements;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    private readonly CosmeticsStoreDbContext _dbContext;
+    protected readonly CosmeticsStoreDbContext _dbContext;
     protected readonly DbSet<T> _dbSet;
 
     public GenericRepository(CosmeticsStoreDbContext dbContext)

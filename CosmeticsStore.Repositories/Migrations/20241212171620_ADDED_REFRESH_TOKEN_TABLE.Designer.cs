@@ -4,6 +4,7 @@ using CosmeticsStore.Repositories.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CosmeticsStore.Repositories.Migrations
 {
     [DbContext(typeof(CosmeticsStoreDbContext))]
-    partial class CosmeticsStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241212171620_ADDED_REFRESH_TOKEN_TABLE")]
+    partial class ADDED_REFRESH_TOKEN_TABLE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,7 +310,7 @@ namespace CosmeticsStore.Repositories.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTimeOffset>("ExpirationTime")
+                    b.Property<DateTimeOffset>("ExpiryDate")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("UserId")
