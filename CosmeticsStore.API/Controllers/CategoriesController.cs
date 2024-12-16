@@ -42,7 +42,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "manager")]
+    // [Authorize(Roles = "manager")]
     public async Task<IActionResult> CreateAsync([FromBody] CategoryCreateDTO category)
     {
         var serviceResponse = await _categoryService.CreateAsync(category);
@@ -55,7 +55,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Roles = "manager")]
+    // [Authorize(Roles = "manager")]
     public async Task<IActionResult> UpdateAsync([FromBody] CategoryUpdateDTO category)
     {
         var serviceResponse = await _categoryService.UpdateAsync(category);
@@ -68,7 +68,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpDelete]
-    [Authorize(Roles = "manager")]
+    // [Authorize(Roles = "manager")]
     [Route("{id:int}")]
     public async Task<IActionResult> RemoveAsync([FromRoute] int id)
     {
@@ -82,7 +82,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Roles = "manager")]
+    // [Authorize(Roles = "manager")]
     [Route("{id:int}/Restore")]
     public async Task<IActionResult> RestoreAsync([FromRoute] int id)
     {
