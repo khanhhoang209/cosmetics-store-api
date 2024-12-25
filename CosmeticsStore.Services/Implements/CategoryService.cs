@@ -49,8 +49,6 @@ public class CategoryService : ICategoryService
         }
     }
 
-
-
     public async Task<ServiceResponse> GetByIdAsync(int id)
     {
         var serviceResponse = new ServiceResponse();
