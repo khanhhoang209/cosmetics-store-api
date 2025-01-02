@@ -15,11 +15,13 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         _dbContext ??= dbContext;
         _dbSet = dbContext.Set<T>();
     }
+
     public virtual List<T> GetAll()
     {
         return _dbContext.Set<T>().ToList();
         //return _dbContext.Set<T>().AsNoTracking().ToList();
     }
+
     public virtual (IEnumerable<T>, int) GetFilter(
         Expression<Func<T, bool>>? filter = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
@@ -102,12 +104,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public virtual bool Update(T entity)
     {
-
         var tracker = _dbContext.Attach(entity);
         tracker.State = EntityState.Modified;
         return _dbContext.SaveChanges() > 0;
     }
-
 
 
     public virtual bool Remove(T entity)
@@ -146,6 +146,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         return await _dbContext.Set<T>().ToListAsync();
     }
+
     public virtual async Task<(IEnumerable<T>, int)> GetFilterAsync(
         Expression<Func<T, bool>>? filter = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
@@ -162,6 +163,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
                 query = include(query);
             }
         }
+
         // Apply the filter if provided
         if (filter != null)
         {
@@ -187,6 +189,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
         return (await query.ToListAsync(), await CountTotalPagesAsync(filter, take));
     }
+
     public virtual async Task<bool> CreateAsync(T entity)
     {
         _dbContext.Add(entity);
@@ -243,7 +246,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public virtual void PrepareCreate(T entity)
     {
         _dbContext.Add(entity);
-
     }
 
     public virtual void PrepareCreate(IEnumerable<T> entities)
@@ -280,7 +282,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     #endregion Separating assign entity and save operators
 
-    private async Task<int> CountTotalPagesAsync(Expression<Func<T, bool>>? filter = null, int? take = null)
+    private async Task<int> CountTotalPagesAsync(Expression<Func<T, bool>>? filter = null,
+        int? take = null)
     {
         IQueryable<T> query = _dbSet;
 
