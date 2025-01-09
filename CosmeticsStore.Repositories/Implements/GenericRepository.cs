@@ -219,8 +219,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public virtual async Task<bool> RemoveAsync(T entity)
     {
         _dbContext.Remove(entity);
-        await _dbContext.SaveChangesAsync();
-        return true;
+        return await _dbContext.SaveChangesAsync() > 0;
     }
 
     public virtual async Task<T?> GetByIdAsync(int id)
