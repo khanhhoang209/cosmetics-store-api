@@ -118,6 +118,17 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CosmeticsStore")
     .AddEntityFrameworkStores<CosmeticsStoreDbContext>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ClientCors", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithExposedHeaders("Location");
+    });
+});
+
 //Add Authentication
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromMinutes(5));
 builder.Services.AddAuthentication(options =>
@@ -156,6 +167,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("ClientCors");
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
@@ -164,4 +177,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
