@@ -6,6 +6,7 @@ using CosmeticsStore.Repositories.Context;
 using CosmeticsStore.Repositories.Implements;
 using CosmeticsStore.Repositories.Interfaces;
 using CosmeticsStore.Repositories.Models.Domain;
+using CosmeticsStore.Services.Exeptions;
 using CosmeticsStore.Services.Implements;
 using CosmeticsStore.Services.Interfaces;
 using CosmeticsStore.Services.Utils;
@@ -30,6 +31,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddExceptionHandler<GlobalExeptionHandler>();
+builder.Services.AddProblemDetails();
+
 builder.Services.AddMvc().ConfigureApiBehaviorOptions(options =>
 {
     options.InvalidModelStateResponseFactory = context =>
@@ -168,6 +172,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("ClientCors");
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
