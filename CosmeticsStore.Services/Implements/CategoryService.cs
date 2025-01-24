@@ -14,7 +14,7 @@ public class CategoryService : ICategoryService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private const int SizePerPage = 2;
+    private const int SizePerPage = 4;
 
     public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
     {
@@ -23,7 +23,7 @@ public class CategoryService : ICategoryService
     }
 
     #region Service method
-    
+
     public async Task<ServiceResponse> GetAllAsync(CategoryGetDTO category)
     {
         var serviceResponse = new ServiceResponse();
