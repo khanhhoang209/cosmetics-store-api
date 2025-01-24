@@ -70,7 +70,7 @@ public class TokenRepository : ITokenRepository
 
     private async Task<RefreshToken?> GetRefreshTokenAsync(string userId)
     {
-        return await _dbContext.RefreshTokens.FirstOrDefaultAsync(rt => rt.UserId == userId)!;
+        return await _dbContext.RefreshTokens.FirstOrDefaultAsync(rt => rt.UserId == userId);
     }
 
     public async Task<string?> GetUserIdByRefreshTokenAsync(Guid refreshTokenId)
