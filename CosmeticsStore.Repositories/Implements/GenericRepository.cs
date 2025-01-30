@@ -76,7 +76,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
 
         // Count total number of records
-        int totalRecords = query.Count();
+        var totalRecords = query.Count();
 
         // Ensure 'take' has a value and is greater than 0, otherwise assume all records fit on one page
         if (!take.HasValue || take.Value <= 0)
@@ -85,7 +85,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
 
         // Calculate total pages based on total records and take (items per page)
-        int totalPages = (int)Math.Ceiling((double)totalRecords / take.Value);
+        var totalPages = (int)Math.Ceiling((double)totalRecords / take.Value);
 
         return totalPages;
     }
@@ -134,7 +134,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public virtual void Detach(T entity)
     {
         var entry = _dbContext.Entry(entity);
-        if (entry != null)
+        if (entry != null!)
         {
             entry.State = EntityState.Detached;
         }
@@ -293,7 +293,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
 
         // Count total number of records
-        int totalRecords = await query.CountAsync();
+        var totalRecords = await query.CountAsync();
 
         // Ensure 'take' has a value and is greater than 0, otherwise assume all records fit on one page
         if (!take.HasValue || take.Value <= 0)
@@ -301,7 +301,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             return 1;
         }
 
-        int totalPages = (int)Math.Ceiling((double)totalRecords / take.Value);
+        var totalPages = (int)Math.Ceiling((double)totalRecords / take.Value);
 
         return totalPages;
     }
