@@ -21,7 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add repositories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+// builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 // Add services
 builder.Services.AddScoped<ICategoryService, CategoryService>();
