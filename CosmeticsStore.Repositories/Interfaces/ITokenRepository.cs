@@ -2,7 +2,7 @@
 
 namespace CosmeticsStore.Repositories.Interfaces;
 
-public interface ITokenRepository
+public interface ITokenRepository : IGenericRepository<RefreshToken>
 {
     string GenerateJwtToken(ApplicationUser user, string role);
     Task<RefreshToken> GenerateRefreshToken(ApplicationUser user);

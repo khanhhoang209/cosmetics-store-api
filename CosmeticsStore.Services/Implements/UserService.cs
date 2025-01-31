@@ -12,13 +12,13 @@ namespace CosmeticsStore.Services.Implements;
 
 public class UserService : IUserService
 {
-    private readonly ITokenRepository _tokenRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IMapper _mapper;
 
-    public UserService(ITokenRepository tokenRepository, UserManager<ApplicationUser> userManager, IMapper mapper)
+    public UserService(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IMapper mapper)
     {
-        _tokenRepository = tokenRepository;
+        _unitOfWork = unitOfWork;
         _userManager = userManager;
         _mapper = mapper;
     }
@@ -109,8 +109,8 @@ public class UserService : IUserService
             }
 
             var role = (await _userManager.GetRolesAsync(user))[0];
-            var accessToken = _tokenRepository.GenerateJwtToken(user, role);
-            var refreshToken = (await _tokenRepository.GenerateRefreshToken(user)).Id;
+            var accessToken = _unitOfWork.TokenRepository.GenerateJwtToken(user, role);
+            var refreshToken = (await _unitOfWork.TokenRepository.GenerateRefreshToken(user)).Id;
 
             return new ServiceResponse()
                 .SetSucceeded(true)

@@ -11,17 +11,15 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CosmeticsStore.Repositories.Implements;
 
-public class TokenRepository : ITokenRepository
+public class TokenRepository : GenericRepository<RefreshToken>, ITokenRepository
 {
     private const int RefreshTokenExpirationTime = 60 * 60 * 24 * 7;
     private const int AccessTokenExpirationTime = 60 * 60 * 30;
     private readonly IConfiguration _configuration;
-    private readonly CosmeticsStoreDbContext _dbContext;
 
-    public TokenRepository(IConfiguration configuration, CosmeticsStoreDbContext dbContext)
+    public TokenRepository(CosmeticsStoreDbContext dbContext, IConfiguration configuration) : base(dbContext)
     {
         _configuration = configuration;
-        _dbContext = dbContext;
     }
 
     public string GenerateJwtToken(ApplicationUser user, string role)
