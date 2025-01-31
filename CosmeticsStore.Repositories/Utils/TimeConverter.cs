@@ -14,7 +14,6 @@ public static class TimeConverter
 
     public static DateTimeOffset ToVietNamTime(DateTimeOffset time)
     {
-
         var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
         var timeAtVietNam = TimeZoneInfo.ConvertTime(time, vietnamTimeZone);
 
