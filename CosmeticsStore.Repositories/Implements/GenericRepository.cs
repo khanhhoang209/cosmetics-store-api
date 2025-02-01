@@ -8,7 +8,7 @@ namespace CosmeticsStore.Repositories.Implements;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     protected readonly CosmeticsStoreDbContext _dbContext;
-    protected readonly DbSet<T> _dbSet;
+    private readonly DbSet<T> _dbSet;
 
     public GenericRepository(CosmeticsStoreDbContext dbContext)
     {
@@ -108,7 +108,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         tracker.State = EntityState.Modified;
         return _dbContext.SaveChanges() > 0;
     }
-
 
     public virtual bool Remove(T entity)
     {
