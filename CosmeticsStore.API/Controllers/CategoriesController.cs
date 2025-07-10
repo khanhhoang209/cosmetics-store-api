@@ -42,7 +42,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost]
-    // [Authorize(Roles = "manager")]
+    [Authorize(Roles = "customer")]
     public async Task<IActionResult> CreateAsync([FromBody] CategoryCreateDTO category)
     {
         var serviceResponse = await _categoryService.CreateAsync(category);

@@ -36,7 +36,7 @@ public class TokenRepository : GenericRepository<RefreshToken>, ITokenRepository
             _configuration["Jwt:Issuer"],
             _configuration["Jwt:Audience"],
             claims,
-            expires: DateTime.Now.AddSeconds(AccessTokenExpirationTime),
+            expires: DateTime.UtcNow.AddSeconds(AccessTokenExpirationTime),
             signingCredentials: credentials
         );
 
